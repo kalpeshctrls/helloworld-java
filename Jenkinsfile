@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://your-git-repo-url/helloworld-java.git'
+                git 'https://github.com/kalpeshctrls/helloworld-java.git'
             }
         }
 
