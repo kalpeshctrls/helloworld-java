@@ -28,7 +28,7 @@ pipeline {
                 //Building project inside build container
                 container("build"){
                     script{
-			sh "apt-get install -y unzip"  
+			sh "yum install -y unzip"  
                         sh "wget https://sonar.arlocloud.com/static/cpp/build-wrapper-linux-x86.zip"
                         sh "unzip build-wrapper-linux-x86.zip"
                         sh "chmod +x build.sh"
