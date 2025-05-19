@@ -1,6 +1,10 @@
 pipeline {
     agent any
-
+     kubernetes {
+			label "hmsfree"
+			defaultContainer "jnlp"
+			yamlFile "Jenkins.yaml"
+		 }
     environment {
         IMAGE_NAME = 'kalpeshctrls/demo'
         IMAGE_TAG = 'latest'
