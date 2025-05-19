@@ -21,6 +21,24 @@ pipeline {
             }
         }
 
+
+          //Build stage to create .so file
+        stage("Build") {
+            steps{
+                //Building project inside build container
+                container("build"){
+                    script{
+			sh "apt-get install -y unzip"  
+                        sh "wget https://sonar.arlocloud.com/static/cpp/build-wrapper-linux-x86.zip"
+                        sh "unzip build-wrapper-linux-x86.zip"
+                        sh "chmod +x build.sh"
+                        sh "./build-wrapper-linux-x86/build-wrapper-linux-x86-64 --out-dir bw_output $WORKSPACE/build.sh"
+                    }
+                }
+            }
+        }
+
+
         stage('Unit Test') {
             steps {
                 script {
