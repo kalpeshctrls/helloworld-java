@@ -1,6 +1,7 @@
 pipeline {
     agent any
-        environment {
+
+    environment {
         IMAGE_NAME = 'kalpeshctrls/demo'
         IMAGE_TAG = 'latest'
     }
@@ -20,6 +21,15 @@ pipeline {
             }
         }
 
+        stage('Unit Test') {
+            steps {
+                script {
+                    echo 'Running unit tests...'
+                    // Add test commands here
+                }
+            }
+        }
+
         stage('Run Docker Image') {
             steps {
                 script {
@@ -34,6 +44,15 @@ pipeline {
                     docker.withRegistry('https://index.docker.io/v1/', 'dockerhub-credentials') {
                         dockerImage.push("${IMAGE_TAG}")
                     }
+                }
+            }
+        }
+
+        stage('Clean Up') {
+            steps {
+                script {
+                    echo 'Stopping and removing containers...'
+                    sh 'docker ps -q --filter ancestor=${IMAGE_NAME}:${IMAGE_TAG} | xargs -r docker stop'
                 }
             }
         }
